@@ -6,7 +6,7 @@ import os
 # Database Connections
 
 engine = create_engine("sqlite:///data.db")
-conn = create_engine("mysql+pymysql://root:yash%402002@localhost/ecom_db")
+conn = create_engine("mysql+pymysql://root:password@localhost/ecom_db")
 
 # Extract Data
 
