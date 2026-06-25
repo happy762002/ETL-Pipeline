@@ -1,0 +1,68 @@
+Steps 
+
+1. SQLite connection
+
+2. The database file was created.
+
+3. Changing the datatype to avoid errors while importing the .sql file from SQLite -> MySQL Server
+
+4. Changing the datatype. Here is the Query.
+
+CREATE TABLE data_new (
+    InvoiceNo TEXT,
+    StockCode TEXT,
+    Description TEXT,
+    Quantity TEXT,
+    InvoiceDate TEXT,
+    UnitPrice TEXT,
+    CustomerID TEXT,
+    Country TEXT
+);
+
+INSERT INTO data_new
+SELECT
+    InvoiceNo,
+    StockCode,
+    Description,
+    Quantity,
+    InvoiceDate,
+    UnitPrice,
+    CustomerID,
+    Country
+FROM data;
+
+
+verifying
+
+SELECT COUNT(*) FROM data;
+SELECT COUNT(*) FROM data_new;
+
+drop the old table
+
+drop tablename;
+
+rename the new table
+
+alter table tablename RENAME TO newname;
+
+5. generating the dump file
+
+sqlite3 mydb.db .dump > dump.sql
+
+
+
+How to run SQLite database
+
+open the terminal
+
+sqlite3 databasename.db
+
+for viewing table
+
+.tables;
+
+for schema
+
+.schema tablename;
+	
+	
