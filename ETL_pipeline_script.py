@@ -148,6 +148,11 @@ def changing_dtypes():
         2
     )
 
+    df1['Quantity'] = pd.to_numeric(df1['Quantity'], errors='coerce')
+    
+    # convert to positive to negitive
+    df1['Quantity'] = df1['Quantity'].abs()
+
 
 def string_manipulating():
 
