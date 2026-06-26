@@ -30,3 +30,12 @@ Power BI / Tableau Dashboard<br>
 
 * In this case, the dataset contained values that did not match the expected datatypes. Therefore, I converted all columns to the `TEXT` datatype before migration.
 * If the dataset already follows the target table schema and datatypes, it can be imported directly into MySQL without using a Python migration script.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#### Day 2 (ETL Pipeline Construction)
+
+* Extract data from MySQL server.(`Extract`)
+* performed EDA.(`Tranformation`)
+* Export Cleaned dataset in MySQL Sever for Building Dashboard.(`Load`)
+* 
