@@ -37,4 +37,4 @@ Power BI / Tableau Dashboard<br>
 
 * Extract data from MySQL server.(`Extract`)
 * performed EDA.(`Tranformation`)
-* Export Cleaned dataset in MySQL Sever for Building Dashboard.(`Load`)
+* Export Cleaned dataset in MySQL Server for Building Dashboard.(`Load`)
