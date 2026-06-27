@@ -73,7 +73,7 @@ def check_the_connection():
 
 def datacleaning():
 
-    global df1
+    # global df1
 
     df1 = pd.read_sql_table(
         table_name="data",
@@ -114,10 +114,11 @@ def datacleaning():
     df1.dropna(subset=["CustomerID"], inplace=True)
     df1.dropna(subset=["Description"], inplace=True)
 
+    return df1
 
-def changing_dtypes():
+def changing_dtypes(df1):
 
-    global df1
+    # global df1
 
     print("Datatype Before Conversion\n")
     print(df1.dtypes)
@@ -138,25 +139,21 @@ def changing_dtypes():
     )
 
     df1 = df1.astype({
-        "Quantity": "int",
         "UnitPrice": "float",
         "CustomerID": "Int64"
     })
-
-    df1["TotalPrice"] = round(
-        df1["Quantity"] * df1["UnitPrice"],
-        2
-    )
 
     df1['Quantity'] = pd.to_numeric(df1['Quantity'], errors='coerce')
     
     # convert to positive to negitive
     df1['Quantity'] = df1['Quantity'].abs()
 
+    return df1
 
-def string_manipulating():
 
-    global df1
+def string_manipulating(df1):
+
+    # global df1
 
     df1 = df1.apply(
         lambda col: col.str.strip()
@@ -177,10 +174,34 @@ def string_manipulating():
         .str.replace(" ", "")
     )
 
+    return df1
 
-def verifying_clean_data():
+def adding_new_col(df1):
+    # add total price
+    df1['TotalPrice'] = round(df1['Quantity'] * df1['UnitPrice'],2)
+    df1['Year'] = df1['InvoiceDate'].dt.year
+    df1['Quarter'] = df1['InvoiceDate'].dt.quarter
+    df1['Month'] = df1['InvoiceDate'].dt.month_name()
+    df1['Day'] = df1['InvoiceDate'].dt.day_name()
+    df1['Weekend'] = df1['Day'].isin(['Saturday','Sunday'])
+    df1['Weekend'] = df1['Weekend'].astype('int')
+    
+    def order_size(qty):
+        if qty <= 10:
+            return 'Small'
+        elif qty <= 50:
+            return 'Medium'
+        else:
+            return 'Large'
+    
+    df1['OrderSize'] = df1['Quantity'].apply(order_size)
 
-    global df1
+    return df1
+
+
+def verifying_clean_data(df1):
+
+    # global df1
 
     print(f"{'-'*50} Verifying Data {'-'*50}")
 
@@ -198,11 +219,13 @@ def verifying_clean_data():
 
     print("-"*100)
 
+    return df1
+
 # Export
 
-def export():
+def export(df1):
 
-    global df1
+    # global df1
 
     df1.to_sql(
         "data_cleaned",
@@ -222,14 +245,25 @@ def export():
 
 def main():
 
+    # Extract(From MySQl)
+    
     create_sql_file()
     sqlite_to_mysql()
-    check_the_connection()
-    datacleaning()
-    changing_dtypes()
-    string_manipulating()
-    verifying_clean_data()
-    export()
 
+    # Verify Connection 
+    check_the_connection()
+
+    # Transform
+    df1 = datacleaning()
+    df1 = changing_dtypes(df1)
+    df1 = string_manipulating(df1)
+    df1 = adding_new_col(df1)
+
+    # Verify
+    df1 = verifying_clean_data(df1)
+
+    # Load
+    export(df1)
+    
 if __name__ == "__main__":
     main()
