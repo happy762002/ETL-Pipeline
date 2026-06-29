@@ -16,7 +16,7 @@ Cleaned Data Warehouse<br>
       ▼<br>
 Power BI / Tableau Dashboard<br>
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-### The Steps 1 Performed
+### The Steps i'd Performed
 
 #### Day 1 (ETL Process)
 
